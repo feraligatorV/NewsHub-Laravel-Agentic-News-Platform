@@ -1,0 +1,8 @@
+{
+  "label": "Review",
+  "position": 9,
+  "link": {
+    "type": "generated-index",
+    "description": "Reporte de revisión técnica del proyecto NewsHub."
+  }
+}

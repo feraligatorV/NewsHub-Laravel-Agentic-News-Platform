@@ -110,4 +110,4 @@ docker run --rm -v "${PWD}:/app" -w /app composer:2 php artisan route:list --pat
 
 - El entorno local del host no tiene `php` ni `composer` en el `PATH`; las verificaciones se ejecutaron mediante Docker.
 - Es necesario definir `JWT_SECRET` en `.env` antes de ejecutar el proyecto fuera de testing.
-- Aún falta integrar estas APIs con la experiencia React/Inertia en una etapa frontend posterior.
+- La integración visual con React/Inertia ya fue completada en la etapa frontend.

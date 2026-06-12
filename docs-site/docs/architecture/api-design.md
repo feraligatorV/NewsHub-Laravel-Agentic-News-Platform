@@ -19,7 +19,7 @@ sidebar_position: 5
 | --- | --- | --- |
 | `GET` | `/api/news` | Lista noticias publicadas |
 | `GET` | `/api/news/{slug}` | Devuelve detalle de una noticia |
-| `GET` | `/api/news/{slug}/recommendations` | Devuelve noticias recomendadas |
+| `GET` | `/api/news/{slug}/recommended` | Devuelve noticias recomendadas |
 | `GET` | `/api/categories` | Lista categorías |
 | `GET` | `/api/categories/{slug}/news` | Lista noticias por categoría |
 

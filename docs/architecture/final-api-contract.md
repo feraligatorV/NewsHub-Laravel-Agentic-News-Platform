@@ -166,7 +166,7 @@ Response `200 OK`:
 
 Devuelve el detalle de una noticia.
 
-### `GET /api/news/{slug}/recommendations`
+### `GET /api/news/{slug}/recommended`
 
 Devuelve al menos 3 noticias recomendadas cuando existan suficientes datos.
 
@@ -190,4 +190,3 @@ Lista noticias publicadas de una categoría.
   }
 }
 ```
-

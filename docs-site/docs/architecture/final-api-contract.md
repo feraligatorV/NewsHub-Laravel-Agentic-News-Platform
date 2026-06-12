@@ -33,7 +33,7 @@ Todas las respuestas API deben ser JSON. Las entidades de dominio deben exponers
 | `POST` | `/api/auth/logout` | `auth:api` | Invalida token actual |
 | `GET` | `/api/news` | Pública | Lista noticias publicadas |
 | `GET` | `/api/news/{slug}` | Pública | Devuelve detalle de noticia |
-| `GET` | `/api/news/{slug}/recommendations` | Pública | Devuelve recomendaciones |
+| `GET` | `/api/news/{slug}/recommended` | Pública | Devuelve recomendaciones |
 | `GET` | `/api/categories` | Pública | Lista categorías |
 | `GET` | `/api/categories/{slug}/news` | Pública | Lista noticias por categoría |
 
@@ -89,4 +89,3 @@ Response `200 OK`:
   ]
 }
 ```
-

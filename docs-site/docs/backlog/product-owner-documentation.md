@@ -8,14 +8,14 @@ sidebar_position: 1
 
 ## 1. Visión del producto
 
-NewsHub será una aplicación web de noticias construida con Laravel 12, React, TypeScript, Inertia.js y MySQL, orientada a demostrar una solución profesional, mantenible y ejecutable con Docker para una prueba técnica.
+NewsHub será una aplicación web de noticias construida con Laravel 13, React, TypeScript, Inertia.js y MySQL, orientada a demostrar una solución profesional, mantenible y ejecutable con Docker para una prueba técnica.
 
-El producto permitirá a usuarios consultar noticias, explorar categorías, revisar el detalle de una noticia y recibir recomendaciones relacionadas. Además, expondrá endpoints protegidos mediante `Sanctum` o `JWT` para demostrar seguridad, consumo de datos y separación clara entre experiencia web y API.
+El producto permitirá a usuarios consultar noticias, explorar categorías, revisar el detalle de una noticia y recibir recomendaciones relacionadas. Además, expondrá endpoints protegidos mediante `JWT` para demostrar seguridad, consumo de datos y separación clara entre experiencia web y API.
 
 ## 2. Objetivos del proyecto
 
 - Entregar una aplicación funcional de noticias con listado, detalle, categorías y recomendaciones.
-- Implementar autenticación con `Sanctum` o `JWT` para proteger endpoints API.
+- Implementar autenticación con `JWT` para proteger endpoints API.
 - Integrar React + TypeScript dentro de Laravel usando `Inertia.js` y `Vite`, sin crear una aplicación frontend standalone.
 - Proveer datos iniciales mediante migrations, factories y seeders.
 - Garantizar calidad con pruebas unitarias y feature tests para autenticación, listado, detalle y recomendaciones.
@@ -38,7 +38,7 @@ El producto permitirá a usuarios consultar noticias, explorar categorías, revi
 
 - La aplicación debe ejecutarse localmente con Docker y Docker Compose.
 - La base de datos debe usar MySQL.
-- El backend debe usar Laravel 12 y PHP 8.3.
+- El backend debe usar Laravel 13 y PHP 8.4.
 - El frontend debe vivir bajo `resources/js`.
 - El frontend debe usar React, TypeScript, Inertia.js, Vite y Material UI.
 - La solución debe evitar sobreingeniería y aplicar arquitectura limpia solo donde aporte claridad.
@@ -93,7 +93,7 @@ Facilitar la exploración de contenido mediante categorías y noticias relaciona
 
 ### EP-03 - Autenticación y seguridad API
 
-Proteger endpoints y sesiones mediante `Sanctum` o `JWT`.
+Proteger endpoints y sesiones mediante `JWT`.
 
 ### EP-04 - Experiencia frontend integrada
 
@@ -242,7 +242,7 @@ Como evaluador técnico, quiero consultar documentación en Docusaurus para ente
 | P0 | US-03 | Ver noticias recomendadas | Historia | EP-02 | Al menos 3 recomendaciones por detalle |
 | P0 | US-05 | Registrarme | Historia | EP-03 | Registro validado |
 | P0 | US-06 | Iniciar sesión | Historia | EP-03 | Autenticación funcional |
-| P0 | US-08 | Consumir endpoints protegidos | Historia | EP-03 | API protegida con `Sanctum` o `JWT` |
+| P0 | US-08 | Consumir endpoints protegidos | Historia | EP-03 | API protegida con `JWT` |
 | P1 | US-04 | Explorar categorías | Historia | EP-02 | Navegación por categorías |
 | P1 | US-07 | Cerrar sesión | Historia | EP-03 | Sesión o token invalidado |
 | P1 | US-10 | Ejecutar pruebas automatizadas | Historia | EP-06 | Cobertura mínima de casos críticos |
@@ -255,14 +255,14 @@ Como evaluador técnico, quiero consultar documentación en Docusaurus para ente
 - Integración incompleta entre React, TypeScript, Inertia.js y Laravel si se intenta separar el frontend como aplicación standalone.
 - Configuración Docker inconsistente entre PHP, Nginx y MySQL.
 - Tiempo limitado para cubrir pruebas unitarias, feature tests y React Testing Library.
-- Ambigüedad entre `Sanctum` y `JWT`; elegir ambos aumentaría complejidad sin aportar valor para la prueba.
+- Riesgo de mezclar autenticación web de Breeze con autenticación API `JWT`; la API debe usar `tymon/jwt-auth`.
 - Recomendaciones poco relevantes si solo se generan por datos aleatorios.
 - Documentación desactualizada si los endpoints o comandos cambian durante la implementación.
-- Incompatibilidades de Laravel 12 o PHP 8.3 con dependencias no fijadas.
+- Incompatibilidades de Laravel 13 o PHP 8.4 con dependencias no fijadas.
 
 ## 11. Supuestos
 
-- Se usará un único mecanismo de autenticación: preferentemente `Sanctum`, salvo decisión técnica distinta.
+- Se usará `JWT` con `tymon/jwt-auth` como mecanismo principal de autenticación API.
 - La aplicación no requiere panel administrativo para crear noticias en esta entrega.
 - Las noticias pueden cargarse mediante seeders.
 - Las recomendaciones se pueden calcular por categoría compartida y exclusión de la noticia actual.
@@ -310,7 +310,7 @@ Como evaluador técnico, quiero consultar documentación en Docusaurus para ente
 Una tarea se considera terminada cuando:
 
 - El comportamiento solicitado está implementado.
-- La solución respeta Laravel 12, PHP 8.3, MySQL, React, TypeScript, Inertia.js, Vite y Material UI.
+- La solución respeta Laravel 13, PHP 8.4, MySQL, React, TypeScript, Inertia.js, Vite y Material UI.
 - Todo el código frontend vive bajo `resources/js`.
 - No existe una aplicación frontend standalone.
 - Las validaciones relevantes usan Form Requests.

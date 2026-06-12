@@ -44,4 +44,3 @@ Con React Testing Library:
 - Las pruebas críticas deben pasar antes de considerar completa una tarea.
 - Los tests deben poder ejecutarse dentro del entorno Docker.
 - La documentación QA debe registrar comandos ejecutados y resultado.
-

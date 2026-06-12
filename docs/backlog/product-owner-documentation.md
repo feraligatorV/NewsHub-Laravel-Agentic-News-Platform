@@ -2,7 +2,7 @@
 
 ## 1. Visión del producto
 
-NewsHub será una aplicación web de noticias construida con Laravel 12, React, TypeScript, Inertia.js y MySQL, orientada a demostrar una solución profesional, mantenible y ejecutable con Docker para una prueba técnica.
+NewsHub será una aplicación web de noticias construida con Laravel 13, React, TypeScript, Inertia.js y MySQL, orientada a demostrar una solución profesional, mantenible y ejecutable con Docker para una prueba técnica.
 
 El producto permitirá a usuarios consultar noticias, explorar categorías, revisar el detalle de una noticia y recibir recomendaciones relacionadas. Además, expondrá endpoints protegidos mediante `JWT` para demostrar seguridad, consumo de datos y separación clara entre experiencia web y API.
 
@@ -32,7 +32,7 @@ El producto permitirá a usuarios consultar noticias, explorar categorías, revi
 
 - La aplicación debe ejecutarse localmente con Docker y Docker Compose.
 - La base de datos debe usar MySQL.
-- El backend debe usar Laravel 12 y PHP 8.3.
+- El backend debe usar Laravel 13 y PHP 8.4.
 - El frontend debe vivir bajo `resources/js`.
 - El frontend debe usar React, TypeScript, Inertia.js, Vite y Material UI.
 - La solución debe evitar sobreingeniería y aplicar arquitectura limpia solo donde aporte claridad.
@@ -251,11 +251,11 @@ Como evaluador técnico, quiero consultar documentación en Docusaurus para ente
 - Tiempo limitado para cubrir pruebas unitarias, feature tests y React Testing Library.
 - Recomendaciones poco relevantes si solo se generan por datos aleatorios.
 - Documentación desactualizada si los endpoints o comandos cambian durante la implementación.
-- Incompatibilidades de Laravel 12 o PHP 8.3 con dependencias no fijadas.
+- Incompatibilidades de Laravel 13 o PHP 8.4 con dependencias no fijadas.
 
 ## 11. Supuestos
 
-- Se usará un único mecanismo de autenticación: preferentemente `JWT`, salvo decisión técnica distinta.
+- Se usará `JWT` con `tymon/jwt-auth` como mecanismo principal de autenticación API.
 - La aplicación no requiere panel administrativo para crear noticias en esta entrega.
 - Las noticias pueden cargarse mediante seeders.
 - Las recomendaciones se pueden calcular por categoría compartida y exclusión de la noticia actual.
@@ -303,7 +303,7 @@ Como evaluador técnico, quiero consultar documentación en Docusaurus para ente
 Una tarea se considera terminada cuando:
 
 - El comportamiento solicitado está implementado.
-- La solución respeta Laravel 12, PHP 8.3, MySQL, React, TypeScript, Inertia.js, Vite y Material UI.
+- La solución respeta Laravel 13, PHP 8.4, MySQL, React, TypeScript, Inertia.js, Vite y Material UI.
 - Todo el código frontend vive bajo `resources/js`.
 - No existe una aplicación frontend standalone.
 - Las validaciones relevantes usan Form Requests.

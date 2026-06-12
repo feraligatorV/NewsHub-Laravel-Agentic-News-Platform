@@ -2,7 +2,7 @@
 
 ## Propósito
 
-NewsHub es una aplicación web de noticias implementada con Laravel 12, PHP 8.3, MySQL, React, TypeScript, Inertia.js, Vite y Material UI. La solución debe ser simple, profesional y adecuada para una prueba técnica, evitando un frontend standalone y manteniendo todo el código de interfaz bajo `resources/js`.
+NewsHub es una aplicación web de noticias implementada con Laravel 13, PHP 8.4, MySQL, React, TypeScript, Inertia.js, Vite y Material UI. La solución debe ser simple, profesional y adecuada para una prueba técnica, evitando un frontend standalone y manteniendo todo el código de interfaz bajo `resources/js`.
 
 ## Principios
 
@@ -11,7 +11,7 @@ NewsHub es una aplicación web de noticias implementada con Laravel 12, PHP 8.3,
 - Usar services o actions para lógica de negocio relevante.
 - Usar Form Requests para validación de entrada.
 - Usar API Resources para respuestas JSON.
-- Proteger endpoints privados con `JWT`.
+- Proteger endpoints privados con `JWT` usando `tymon/jwt-auth`.
 - Ejecutar el sistema con Docker, Docker Compose, MySQL y Nginx.
 - Documentar decisiones y operación en español.
 
@@ -31,4 +31,3 @@ NewsHub es una aplicación web de noticias implementada con Laravel 12, PHP 8.3,
 3. Inertia.js entrega la página React adecuada ubicada en `resources/js/Pages`.
 4. React renderiza la experiencia usando componentes compartidos de `resources/js/Components`.
 5. Las APIs protegidas validan el token `JWT` antes de responder.
-

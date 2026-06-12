@@ -8,7 +8,7 @@ C4Container
 
     Container_Boundary(system, "NewsHub") {
         Container(nginx, "Nginx", "Web server", "Expone HTTP y reenvía a PHP-FPM")
-        Container(app, "Laravel App", "Laravel 12 / PHP 8.3", "Rutas web, API, dominio, autenticación JWT e Inertia")
+        Container(app, "Laravel App", "Laravel 13 / PHP 8.4", "Rutas web, API, dominio, autenticación JWT e Inertia")
         Container(frontend, "React UI", "React + TypeScript + Inertia.js + Vite + Material UI", "Interfaz integrada bajo resources/js")
         ContainerDb(mysql, "MySQL", "MySQL", "Persistencia de usuarios, categorías y noticias")
         Container(docs, "Docusaurus", "Docusaurus", "Documentación técnica y de producto")
@@ -24,4 +24,3 @@ C4Container
 ## Descripción
 
 La interfaz React no es un contenedor desplegable separado de negocio; forma parte del build de Laravel. Se representa por claridad arquitectónica porque tiene estructura, dependencias y pruebas propias.
-

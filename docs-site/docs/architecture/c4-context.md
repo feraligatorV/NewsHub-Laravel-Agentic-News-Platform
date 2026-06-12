@@ -19,5 +19,4 @@ C4Context
     Rel(browser, newshub, "Accede por HTTP/HTTPS")
 ```
 
-NewsHub concentra backend, frontend integrado y API en una sola aplicación Laravel. Los endpoints privados requieren autenticación `JWT`.
-
+NewsHub concentra backend, frontend integrado y API en una sola aplicación Laravel. Los endpoints privados requieren autenticación con `JWT`.

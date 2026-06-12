@@ -7,7 +7,7 @@ sidebar_position: 6
 
 ## Servicios
 
-- `app`: contenedor PHP 8.3 con Laravel y PHP-FPM.
+- `app`: contenedor PHP 8.4 con Laravel y PHP-FPM.
 - `nginx`: servidor HTTP que expone la aplicación.
 - `mysql`: base de datos MySQL.
 - `node`: opcional para instalar dependencias y compilar assets con Vite.
@@ -34,10 +34,10 @@ flowchart LR
 - `DB_USERNAME`
 - `DB_PASSWORD`
 - `JWT_SECRET`
+- Variables de sesión de Laravel para el scaffolding web cuando aplique.
 
 ## Consideraciones
 
 - MySQL debe persistir datos en un volumen Docker.
 - Nginx debe apuntar al directorio público de Laravel.
 - Vite debe compilar assets desde el proyecto Laravel, no desde una app separada.
-

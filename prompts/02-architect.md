@@ -15,13 +15,14 @@ Generate:
 
 Project context:
 
-- Backend: Laravel 12.
+- Backend: Laravel 13.
+- Runtime: PHP 8.4.
 - Frontend: React + TypeScript integrated inside Laravel.
 - Frontend bridge: Inertia.js.
 - Build tool: Vite.
 - UI library: Material UI.
 - Database: MySQL.
-- Authentication: JWT.
+- Authentication: JWT using `tymon/jwt-auth`.
 - Documentation: Docusaurus.
 - Environment: Docker and Docker Compose.
 - Do not create a standalone frontend project.

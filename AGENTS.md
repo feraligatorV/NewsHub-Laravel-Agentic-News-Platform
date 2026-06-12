@@ -14,7 +14,7 @@ The goal is to deliver a simple requirement with a professional, scalable, agent
 - News detail page.
 - Recommended news section with at least 3 related news.
 - Categories section.
-- JWT or Sanctum authentication.
+- JWT authentication using tymon/jwt-auth.
 - Protected API endpoints.
 - Dockerized MySQL environment.
 - Unit and feature tests.
@@ -24,7 +24,7 @@ The goal is to deliver a simple requirement with a professional, scalable, agent
 # Technology Stack
 
 Backend:
-- Laravel 12
+- Laravel 13
 - PHP 8.4
 - MySQL
 
@@ -41,6 +41,12 @@ Infrastructure:
 - Docker
 - Docker Compose
 - Nginx
+
+Authentication:
+- JWT using tymon/jwt-auth
+- API tokens must be sent with Authorization: Bearer <token>
+- Breeze/Inertia can exist only as frontend scaffolding
+- Do not use Sanctum as the main API authentication strategy
 
 Documentation:
 - Docusaurus

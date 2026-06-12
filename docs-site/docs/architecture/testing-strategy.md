@@ -40,4 +40,3 @@ Con React Testing Library:
 
 - Las pruebas críticas deben pasar antes de considerar completa una tarea.
 - Los tests deben poder ejecutarse dentro del entorno Docker.
-

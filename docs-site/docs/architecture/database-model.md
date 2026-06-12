@@ -23,7 +23,7 @@ Campos sugeridos: `id`, `category_id`, `title`, `slug`, `summary`, `content`, `i
 
 - `Category` tiene muchas `News`.
 - `News` pertenece a `Category`.
-- `User` se autentica mediante `JWT`; no se requiere relación directa con `News` para el alcance mínimo.
+- `User` se autentica en API mediante `JWT`; no se requiere relación directa con `News` para el alcance mínimo.
 
 ## Índices recomendados
 
@@ -68,4 +68,3 @@ erDiagram
     }
     CATEGORIES ||--o{ NEWS : contains
 ```
-

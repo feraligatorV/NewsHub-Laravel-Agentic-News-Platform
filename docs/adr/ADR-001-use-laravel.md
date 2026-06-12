@@ -1,4 +1,4 @@
-# ADR-001 - Usar Laravel 12 como framework backend
+# ADR-001 - Usar Laravel 13 como framework backend
 
 ## Estado
 
@@ -6,11 +6,11 @@ Aceptada
 
 ## Contexto
 
-La prueba técnica requiere una aplicación de noticias con autenticación, API protegida, MySQL, pruebas y ejecución con Docker. Aunque el enunciado original menciona otras tecnologías, el proyecto se implementará con Laravel 12 y PHP 8.3.
+La prueba técnica requiere una aplicación de noticias con autenticación, API protegida, MySQL, pruebas y ejecución con Docker. Aunque el enunciado original menciona otras tecnologías, el proyecto se implementará con Laravel 13 y PHP 8.4.
 
 ## Decisión
 
-Se usará Laravel 12 como framework principal del backend y como contenedor de la experiencia web integrada con Inertia.js.
+Se usará Laravel 13 como framework principal del backend y como contenedor de la experiencia web integrada con Inertia.js.
 
 ## Consecuencias
 

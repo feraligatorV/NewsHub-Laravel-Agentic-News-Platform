@@ -13,6 +13,24 @@ Implement:
 7. API Resources.
 8. Form Requests when needed.
 
+IMPORTANT AUTHENTICATION DECISION:
+
+The technical test explicitly requires JWT authentication.
+
+Even if the current Laravel scaffolding includes Breeze, session auth, Sanctum references, or Inertia auth pages, the API authentication required for this project must be implemented with JWT using tymon/jwt-auth.
+
+Breeze/Inertia can remain only as frontend scaffolding.
+
+Do not use Laravel Sanctum as the main API authentication mechanism.
+
+Implement API authentication with:
+- tymon/jwt-auth
+- Authorization: Bearer <token>
+- login endpoint returning JWT token
+- logout endpoint invalidating JWT token
+- refresh endpoint if useful
+- protected routes using auth:api or jwt middleware
+
 After implementation, run tests and fix issues.
 
 IMPORTANT:

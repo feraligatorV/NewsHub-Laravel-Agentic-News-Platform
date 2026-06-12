@@ -6,7 +6,7 @@
 - Usar API Resources para respuestas.
 - Usar Form Requests para validación.
 - Mantener rutas REST simples.
-- Proteger endpoints privados con `auth:api` o middleware equivalente para `JWT`.
+- Proteger endpoints privados con `auth:api` usando `tymon/jwt-auth`.
 
 ## Endpoints públicos
 
@@ -56,4 +56,3 @@ El listado `/api/news` debe usar paginación para mantener respuestas pequeñas.
 - `404 Not Found` para noticias o categorías inexistentes.
 - `422 Unprocessable Entity` para validaciones fallidas.
 - `500 Internal Server Error` solo para errores no controlados.
-

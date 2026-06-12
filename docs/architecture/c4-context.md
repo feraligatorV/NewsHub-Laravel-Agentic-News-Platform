@@ -19,5 +19,4 @@ C4Context
 
 ## Descripción
 
-NewsHub concentra backend, frontend integrado y API en una sola aplicación Laravel. Los usuarios interactúan mediante navegador y los endpoints privados requieren autenticación `JWT`.
-
+NewsHub concentra backend, frontend integrado y API en una sola aplicación Laravel. Los usuarios interactúan mediante navegador y los endpoints privados requieren autenticación con `JWT`.

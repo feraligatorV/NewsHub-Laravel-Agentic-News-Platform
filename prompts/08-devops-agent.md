@@ -4,7 +4,8 @@ Your task is to prepare the Laravel News Application for professional local exec
 
 Project context:
 
-* Backend: Laravel 12
+* Backend: Laravel 13
+* Runtime: PHP 8.4
 * Frontend: React + TypeScript integrated inside Laravel using Inertia.js and Vite
 * Database: MySQL
 * Documentation: Docusaurus

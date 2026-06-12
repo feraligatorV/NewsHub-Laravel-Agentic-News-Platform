@@ -11,7 +11,7 @@ sidebar_position: 5
 - Usar API Resources para respuestas.
 - Usar Form Requests para validación.
 - Mantener rutas REST simples.
-- Proteger endpoints privados con middleware para `JWT`.
+- Proteger endpoints privados con `auth:api` usando `tymon/jwt-auth`.
 
 ## Endpoints públicos
 
@@ -56,4 +56,3 @@ sidebar_position: 5
 - `401 Unauthorized` para solicitudes sin token válido.
 - `404 Not Found` para noticias o categorías inexistentes.
 - `422 Unprocessable Entity` para validaciones fallidas.
-

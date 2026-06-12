@@ -4,7 +4,7 @@
 
 La solución debe ejecutarse con Docker Compose y separar responsabilidades mínimas:
 
-- `app`: contenedor PHP 8.3 con Laravel y PHP-FPM.
+- `app`: contenedor PHP 8.4 con Laravel y PHP-FPM.
 - `nginx`: servidor HTTP que expone la aplicación.
 - `mysql`: base de datos MySQL.
 - `node`: opcional para instalar dependencias y compilar assets con Vite.
@@ -31,6 +31,7 @@ flowchart LR
 - `DB_USERNAME`
 - `DB_PASSWORD`
 - `JWT_SECRET`
+- Variables de sesión de Laravel para el scaffolding web cuando aplique.
 
 ## Consideraciones
 
@@ -39,4 +40,3 @@ flowchart LR
 - El contenedor `app` debe ejecutar Composer.
 - Vite debe compilar assets desde el proyecto Laravel, no desde una app separada.
 - La documentación debe explicar comandos de instalación, migración, seed y pruebas.
-

@@ -2,10 +2,36 @@ import '../css/app.css';
 import './bootstrap';
 
 import { createInertiaApp } from '@inertiajs/react';
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'NewsHub';
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#0f766e',
+        },
+        secondary: {
+            main: '#334155',
+        },
+        background: {
+            default: '#f5f7fb',
+        },
+    },
+    typography: {
+        fontFamily:
+            'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+        button: {
+            textTransform: 'none',
+            fontWeight: 700,
+        },
+    },
+    shape: {
+        borderRadius: 8,
+    },
+});
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -17,7 +43,12 @@ createInertiaApp({
     setup({ el, App, props }) {
         const root = createRoot(el);
 
-        root.render(<App {...props} />);
+        root.render(
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <App {...props} />
+            </ThemeProvider>,
+        );
     },
     progress: {
         color: '#4B5563',

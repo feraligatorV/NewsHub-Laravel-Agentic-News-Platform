@@ -1,110 +1,93 @@
-import Checkbox from '@/Components/Checkbox';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import AppShell from '@/Components/Layout/AppShell';
+import { getErrorMessage, login } from '@/lib/api';
+import { storeSession } from '@/lib/auth';
+import { Head, router } from '@inertiajs/react';
+import LoginIcon from '@mui/icons-material/Login';
+import {
+    Alert,
+    Box,
+    Button,
+    Paper,
+    Stack,
+    TextField,
+    Typography,
+} from '@mui/material';
+import { FormEvent, useState } from 'react';
 
-export default function Login({
-    status,
-    canResetPassword,
-}: {
-    status?: string;
-    canResetPassword: boolean;
-}) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
-        remember: false as boolean,
-    });
+export default function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
+    const submit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setLoading(true);
+        setError(null);
 
-        post(route('login'), {
-            onFinish: () => reset('password'),
-        });
+        try {
+            const response = await login(email, password);
+            storeSession(response.data.access_token, response.data.user);
+            router.visit('/');
+        } catch (requestError) {
+            setError(getErrorMessage(requestError));
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <GuestLayout>
-            <Head title="Log in" />
+        <AppShell>
+            <Head title="Login" />
 
-            {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
+            <Box sx={{ maxWidth: 460, mx: 'auto' }}>
+                <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, borderRadius: 2 }}>
+                    <Stack spacing={3} component="form" onSubmit={submit}>
+                        <Box>
+                            <Typography variant="h4" component="h1" sx={{ fontWeight: 900 }}>
+                                Login
+                            </Typography>
+                            <Typography color="text.secondary" sx={{ mt: 1 }}>
+                                Use API credentials to receive a JWT token.
+                            </Typography>
+                        </Box>
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                        {error && (
+                            <Alert severity="error" variant="outlined">
+                                {error}
+                            </Alert>
+                        )}
 
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
-                        onChange={(e) => setData('email', e.target.value)}
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4 block">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) =>
-                                setData(
-                                    'remember',
-                                    (e.target.checked || false) as false,
-                                )
-                            }
+                        <TextField
+                            label="Email"
+                            type="email"
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                            autoComplete="username"
+                            required
+                            fullWidth
                         />
-                        <span className="ms-2 text-sm text-gray-600">
-                            Remember me
-                        </span>
-                    </label>
-                </div>
-
-                <div className="mt-4 flex items-center justify-end">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        <TextField
+                            label="Password"
+                            type="password"
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)}
+                            autoComplete="current-password"
+                            required
+                            fullWidth
+                        />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            size="large"
+                            disabled={loading}
+                            startIcon={<LoginIcon />}
                         >
-                            Forgot your password?
-                        </Link>
-                    )}
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
+                            {loading ? 'Signing in...' : 'Login'}
+                        </Button>
+                    </Stack>
+                </Paper>
+            </Box>
+        </AppShell>
     );
 }

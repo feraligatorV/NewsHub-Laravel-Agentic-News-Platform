@@ -1,18 +1,22 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+    return Inertia::render('News/Index');
+})->name('home');
+
+Route::get('/news/{news}', function (string $news) {
+    return Inertia::render('News/Show', [
+        'slug' => $news,
     ]);
-});
+})->name('news.show');
+
+Route::get('/categories', function () {
+    return Inertia::render('Categories/Index');
+})->name('categories.index');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

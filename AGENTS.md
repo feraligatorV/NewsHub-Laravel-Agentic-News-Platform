@@ -25,7 +25,7 @@ The goal is to deliver a simple requirement with a professional, scalable, agent
 
 Backend:
 - Laravel 12
-- PHP 8.3
+- PHP 8.4
 - MySQL
 
 Frontend:

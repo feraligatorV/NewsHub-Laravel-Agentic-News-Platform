@@ -14,3 +14,7 @@ Check:
 
 Create docs/REVIEW_REPORT.md with findings and improvements.
 Apply small safe fixes if needed.
+
+IMPORTANT:
+All generated documentation must be written in Spanish.
+Code, class names, methods, variables, routes and technical identifiers must remain in English.

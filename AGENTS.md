@@ -21,15 +21,35 @@ The goal is to deliver a simple requirement with a professional, scalable, agent
 - Technical documentation.
 - API documentation.
 
-## Tech Stack
+# Technology Stack
 
-- Laravel
-- PHP 8.3+
+Backend:
+- Laravel 12
+- PHP 8.3
 - MySQL
-- Docker / Docker Compose
+
+Frontend:
+- React + TypeScript
+- Inertia.js
+- Vite
+- Material UI
+- Integrated inside Laravel
+- All frontend code must live under resources/js
+- Do not create a standalone React application
+
+Infrastructure:
+- Docker
+- Docker Compose
 - Nginx
-- PHPUnit or Pest
-- Swagger/OpenAPI
+
+Documentation:
+- Docusaurus
+- Mermaid
+
+Testing:
+- PHPUnit
+- Pest
+- React Testing Library
 
 ## Coding Rules
 
@@ -40,6 +60,23 @@ The goal is to deliver a simple requirement with a professional, scalable, agent
 - Use migrations, factories and seeders.
 - Write tests for authentication, news list, news detail and recommendations.
 - Keep commits small and descriptive.
+
+## Documentation Language
+
+All generated documentation must be written in Spanish.
+
+This includes:
+- Backlog
+- User stories
+- Acceptance criteria
+- Architecture documents
+- ADRs
+- QA reports
+- Review reports
+- DevOps reports
+- Docusaurus documentation
+
+Code, class names, methods, variables, routes, commits and technical identifiers must remain in English.
 
 ## Definition of Done
 

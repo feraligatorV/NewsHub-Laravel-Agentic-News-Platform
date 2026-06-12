@@ -24,3 +24,7 @@ Use clear professional English or Spanish according to the existing project lang
 
 Do not remove existing documentation.
 Use Mermaid diagrams where useful.
+
+IMPORTANT:
+All generated documentation must be written in Spanish.
+Code, class names, methods, variables, routes and technical identifiers must remain in English.

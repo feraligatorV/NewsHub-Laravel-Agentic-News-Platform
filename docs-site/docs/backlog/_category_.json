@@ -1,0 +1,8 @@
+{
+  "label": "Backlog",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Documentación de producto y backlog priorizado de NewsHub."
+  }
+}

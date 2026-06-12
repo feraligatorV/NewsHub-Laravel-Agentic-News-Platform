@@ -14,3 +14,7 @@ Implement:
 8. Form Requests when needed.
 
 After implementation, run tests and fix issues.
+
+IMPORTANT:
+All generated documentation must be written in Spanish.
+Code, class names, methods, variables, routes and technical identifiers must remain in English.

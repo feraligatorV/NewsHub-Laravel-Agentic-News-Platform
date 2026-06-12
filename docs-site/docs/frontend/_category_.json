@@ -1,0 +1,8 @@
+{
+  "label": "Frontend",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "description": "Documentación del frontend React + TypeScript integrado en Laravel con Inertia.js, Vite, Material UI y autenticación JWT."
+  }
+}

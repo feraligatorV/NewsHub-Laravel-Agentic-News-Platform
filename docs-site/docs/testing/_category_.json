@@ -1,0 +1,8 @@
+{
+  "label": "Testing",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "description": "Reportes QA y validaciones de calidad del proyecto NewsHub."
+  }
+}

@@ -1,6 +1,7 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AppShell from '@/Components/Layout/AppShell';
 import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
+import { Box, Paper, Stack, Typography } from '@mui/material';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
@@ -10,34 +11,31 @@ export default function Edit({
     status,
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
     return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Profile
-                </h2>
-            }
-        >
+        <AppShell>
             <Head title="Profile" />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
-                            className="max-w-xl"
-                        />
-                    </div>
+            <Stack spacing={3}>
+                <Box>
+                    <Typography variant="h4" component="h1" sx={{ fontWeight: 900 }}>
+                        Profile
+                    </Typography>
+                    <Typography color="text.secondary" sx={{ mt: 1 }}>
+                        Manage your web account information, password and account lifecycle.
+                    </Typography>
+                </Box>
 
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <UpdatePasswordForm className="max-w-xl" />
-                    </div>
+                <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, borderRadius: 2 }}>
+                    <UpdateProfileInformationForm mustVerifyEmail={mustVerifyEmail} status={status} />
+                </Paper>
 
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <DeleteUserForm className="max-w-xl" />
-                    </div>
-                </div>
-            </div>
-        </AuthenticatedLayout>
+                <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, borderRadius: 2 }}>
+                    <UpdatePasswordForm />
+                </Paper>
+
+                <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, borderRadius: 2 }}>
+                    <DeleteUserForm />
+                </Paper>
+            </Stack>
+        </AppShell>
     );
 }

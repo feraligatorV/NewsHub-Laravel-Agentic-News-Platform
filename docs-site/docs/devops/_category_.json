@@ -1,0 +1,8 @@
+{
+  "label": "DevOps",
+  "position": 10,
+  "link": {
+    "type": "generated-index",
+    "description": "Guías de Docker, entorno local, CI/CD y despliegue para NewsHub."
+  }
+}

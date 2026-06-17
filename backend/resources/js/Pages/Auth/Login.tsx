@@ -1,7 +1,9 @@
 import AppShell from '@/Components/Layout/AppShell';
+import PasswordTextField from '@/Components/PasswordTextField';
 import { getErrorMessage, login } from '@/lib/api';
 import { storeSession } from '@/lib/auth';
-import { Head, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import LoginIcon from '@mui/icons-material/Login';
 import {
     Alert,
@@ -28,10 +30,18 @@ export default function Login() {
         try {
             const response = await login(email, password);
             storeSession(response.data.access_token, response.data.user);
-            router.visit('/');
+
+            router.post(route('login'), {
+                email,
+                password,
+                remember: false,
+            }, {
+                onSuccess: () => router.visit('/'),
+                onError: () => router.visit('/'),
+                onFinish: () => setLoading(false),
+            });
         } catch (requestError) {
             setError(getErrorMessage(requestError));
-        } finally {
             setLoading(false);
         }
     };
@@ -67,15 +77,22 @@ export default function Login() {
                             required
                             fullWidth
                         />
-                        <TextField
+                        <PasswordTextField
                             label="Password"
-                            type="password"
                             value={password}
                             onChange={(event) => setPassword(event.target.value)}
                             autoComplete="current-password"
                             required
                             fullWidth
                         />
+                        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} sx={{ justifyContent: 'space-between' }}>
+                            <Button component={Link} href={route('password.request')}>
+                                Forgot password
+                            </Button>
+                            <Button component={Link} href={route('register')} startIcon={<AppRegistrationIcon />}>
+                                Register
+                            </Button>
+                        </Stack>
                         <Button
                             type="submit"
                             variant="contained"

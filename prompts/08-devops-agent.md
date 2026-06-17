@@ -19,15 +19,28 @@ Project context:
   * prompts/
   * AGENTS.md
 
+Before implementing, read:
+
+- AGENTS.md
+- docs/REVIEW_REPORT.md
+- docs/BACKEND_IMPLEMENTATION_REPORT.md
+- docs/FRONTEND_IMPLEMENTATION_REPORT.md
+- docs/QA_REPORT.md
+- docs/architecture/docker-architecture.md
+- docs/architecture/deployment-diagram.md
+
 Responsibilities:
 
 1. Docker
-
-   * Create or improve Docker setup for Laravel.
-   * Configure PHP, Nginx, MySQL and Node/Vite if needed.
-   * Ensure the project can run locally using Docker Compose.
-   * Add useful container names and ports.
-   * Avoid requiring PHP installed on the host machine.
+The Docker setup must include:
+- Root docker-compose.yml.
+- Dockerfile for Laravel PHP 8.4 runtime.
+- Nginx configuration.
+- MySQL service.
+- Optional Node build support for Vite assets.
+- Persistent MySQL volume.
+- App container must serve Laravel through Nginx.
+- The project must run without local PHP or Composer installed.
 
 2. Environment configuration
 
@@ -75,6 +88,16 @@ Rules:
 * Keep the solution simple, professional and reproducible.
 * Prefer clear documentation over unnecessary complexity.
 * After changes, explain the commands needed to run the project locally.
+
+After implementation, validate or document how to validate:
+
+- docker compose up -d --build
+- docker compose ps
+- docker compose exec app php artisan migrate --seed
+- docker compose exec app php artisan test
+- docker compose exec app npm run build
+
+If a command cannot be executed in the current environment, document the reason clearly in docs/DEVOPS_REPORT.md.
 
 IMPORTANT:
 All generated documentation must be written in Spanish.

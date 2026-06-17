@@ -14,6 +14,7 @@ class NewsRecommendationService
     {
         $sameCategory = News::query()
             ->with('category')
+            ->published()
             ->whereKeyNot($news->getKey())
             ->where('category_id', $news->category_id)
             ->latest('published_at')
@@ -26,6 +27,7 @@ class NewsRecommendationService
 
         $fallback = News::query()
             ->with('category')
+            ->published()
             ->whereKeyNot($news->getKey())
             ->whereNotIn('id', $sameCategory->modelKeys())
             ->latest('published_at')

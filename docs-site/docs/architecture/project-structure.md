@@ -5,44 +5,53 @@ sidebar_position: 2
 
 # Estructura del proyecto
 
-```text
-backend/
-  app/
-    Actions/
-    Http/
-      Controllers/
-        Api/
-        Web/
-      Requests/
-      Resources/
-    Models/
-    Services/
-  database/
-    factories/
-    migrations/
-    seeders/
-  resources/
-    js/
-      Components/
-      Layouts/
-      Pages/
-      types/
-  routes/
-    api.php
-    web.php
-  tests/
-    Feature/
-    Unit/
-docs/
-  adr/
-  architecture/
-  backlog/
-docs-site/
-  docs/
-    adr/
-    architecture/
-    backlog/
-docker/
+```mermaid
+flowchart TD
+    root["NewsHub-Laravel-Agentic-News-Platform"]
+    root --> backend["backend/"]
+    root --> docs["docs/"]
+    root --> docsSite["docs-site/"]
+    root --> docker["docker/"]
+
+    backend --> app["app/"]
+    app --> actions["Actions/"]
+    app --> http["Http/"]
+    http --> controllers["Controllers/"]
+    controllers --> apiControllers["Api/"]
+    controllers --> webControllers["Web/"]
+    http --> requests["Requests/"]
+    http --> apiResources["Resources/"]
+    app --> models["Models/"]
+    app --> services["Services/"]
+
+    backend --> database["database/"]
+    database --> factories["factories/"]
+    database --> migrations["migrations/"]
+    database --> seeders["seeders/"]
+
+    backend --> frontend["resources/"]
+    frontend --> js["js/"]
+    js --> components["Components/"]
+    js --> layouts["Layouts/"]
+    js --> pages["Pages/"]
+    js --> types["types/"]
+
+    backend --> routes["routes/"]
+    routes --> apiRoute["api.php"]
+    routes --> webRoute["web.php"]
+
+    backend --> tests["tests/"]
+    tests --> featureTests["Feature/"]
+    tests --> unitTests["Unit/"]
+
+    docs --> adrDocs["adr/"]
+    docs --> architectureDocs["architecture/"]
+    docs --> backlogDocs["backlog/"]
+
+    docsSite --> docusaurusDocs["docs/"]
+    docusaurusDocs --> siteAdr["adr/"]
+    docusaurusDocs --> siteArchitecture["architecture/"]
+    docusaurusDocs --> siteBacklog["backlog/"]
 ```
 
 ## Reglas de organización
@@ -65,4 +74,3 @@ docker/
 - API Resources: transformación estable de respuestas JSON.
 - React Pages: pantallas de Inertia.
 - React Components: piezas reutilizables de interfaz.
-

@@ -11,13 +11,23 @@ const appName = import.meta.env.VITE_APP_NAME || 'NewsHub';
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#0f766e',
+            main: '#0b4f8a',
+            dark: '#073763',
+            light: '#1e88e5',
         },
         secondary: {
-            main: '#334155',
+            main: '#00a8cc',
+        },
+        success: {
+            main: '#0f8f7a',
         },
         background: {
-            default: '#f5f7fb',
+            default: '#f3f6fa',
+            paper: '#ffffff',
+        },
+        text: {
+            primary: '#102033',
+            secondary: '#5b6778',
         },
     },
     typography: {
@@ -30,6 +40,22 @@ const theme = createTheme({
     },
     shape: {
         borderRadius: 8,
+    },
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 8,
+                },
+            },
+        },
+        MuiCard: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 8,
+                },
+            },
+        },
     },
 });
 

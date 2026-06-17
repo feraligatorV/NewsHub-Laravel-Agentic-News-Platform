@@ -15,6 +15,7 @@ class NewsController extends Controller
     {
         $news = News::query()
             ->with('category')
+            ->published()
             ->when($request->string('search')->toString(), function ($query, string $search): void {
                 $query->where(function ($query) use ($search): void {
                     $query->where('title', 'like', "%{$search}%")
@@ -32,11 +33,15 @@ class NewsController extends Controller
 
     public function show(News $news): NewsResource
     {
-        return new NewsResource($news->load('category'));
+        abort_unless($news->status === 'published', 404);
+
+        return new NewsResource($news->load(['category', 'tags']));
     }
 
     public function recommended(News $news, NewsRecommendationService $recommendations): AnonymousResourceCollection
     {
+        abort_unless($news->status === 'published', 404);
+
         return NewsResource::collection($recommendations->recommendedFor($news));
     }
 }

@@ -1,0 +1,12 @@
+.git
+.github
+docs
+docs-site
+prompts
+backend/node_modules
+backend/vendor
+backend/.env
+backend/storage/logs/*.log
+backend/public/build
+docs-site/node_modules
+docs-site/build

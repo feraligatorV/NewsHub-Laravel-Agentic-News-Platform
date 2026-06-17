@@ -1,9 +1,16 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
+import AppShell from '@/Components/Layout/AppShell';
+import PasswordTextField from '@/Components/PasswordTextField';
 import { Head, useForm } from '@inertiajs/react';
+import LockResetIcon from '@mui/icons-material/LockReset';
+import {
+    Alert,
+    Box,
+    Button,
+    Paper,
+    Stack,
+    TextField,
+    Typography,
+} from '@mui/material';
 import { FormEventHandler } from 'react';
 
 export default function ResetPassword({
@@ -14,14 +21,14 @@ export default function ResetPassword({
     email: string;
 }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        token: token,
-        email: email,
+        token,
+        email,
         password: '',
         password_confirmation: '',
     });
 
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
+    const submit: FormEventHandler = (event) => {
+        event.preventDefault();
 
         post(route('password.store'), {
             onFinish: () => reset('password', 'password_confirmation'),
@@ -29,72 +36,71 @@ export default function ResetPassword({
     };
 
     return (
-        <GuestLayout>
+        <AppShell>
             <Head title="Reset Password" />
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
+            <Box sx={{ maxWidth: 520, mx: 'auto' }}>
+                <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, borderRadius: 2 }}>
+                    <Stack spacing={3} component="form" onSubmit={submit}>
+                        <Box>
+                            <Typography variant="h4" component="h1" sx={{ fontWeight: 900 }}>
+                                Reset password
+                            </Typography>
+                            <Typography color="text.secondary" sx={{ mt: 1 }}>
+                                Choose a new password for your web account.
+                            </Typography>
+                        </Box>
 
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                    />
+                        {Object.keys(errors).length > 0 && (
+                            <Alert severity="error" variant="outlined">
+                                Review the highlighted fields and try again.
+                            </Alert>
+                        )}
 
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
+                        <TextField
+                            label="Email"
+                            type="email"
+                            value={data.email}
+                            onChange={(event) => setData('email', event.target.value)}
+                            error={Boolean(errors.email)}
+                            helperText={errors.email}
+                            autoComplete="username"
+                            required
+                            fullWidth
+                        />
+                        <PasswordTextField
+                            label="New password"
+                            value={data.password}
+                            onChange={(event) => setData('password', event.target.value)}
+                            error={Boolean(errors.password)}
+                            helperText={errors.password}
+                            autoComplete="new-password"
+                            required
+                            fullWidth
+                        />
+                        <PasswordTextField
+                            label="Confirm new password"
+                            value={data.password_confirmation}
+                            onChange={(event) => setData('password_confirmation', event.target.value)}
+                            error={Boolean(errors.password_confirmation)}
+                            helperText={errors.password_confirmation}
+                            autoComplete="new-password"
+                            required
+                            fullWidth
+                        />
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        isFocused={true}
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
-
-                    <TextInput
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
-                        }
-                    />
-
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
-                    />
-                </div>
-
-                <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Reset Password
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            size="large"
+                            disabled={processing}
+                            startIcon={<LockResetIcon />}
+                        >
+                            {processing ? 'Updating...' : 'Reset password'}
+                        </Button>
+                    </Stack>
+                </Paper>
+            </Box>
+        </AppShell>
     );
 }

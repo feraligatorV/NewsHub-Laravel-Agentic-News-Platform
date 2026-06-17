@@ -19,6 +19,7 @@ class CategoryController extends Controller
     {
         $news = $category->news()
             ->with('category')
+            ->published()
             ->latest('published_at')
             ->paginate(10);
 

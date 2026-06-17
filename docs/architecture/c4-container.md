@@ -1,26 +1,34 @@
 # Diagrama C4 - Contenedores
 
 ```mermaid
-C4Container
-    title Contenedores de NewsHub
+flowchart LR
+    visitor["Visitante<br/>Consulta noticias publicadas, categorias y recomendaciones"]
+    authUser["Usuario autenticado<br/>Consume endpoints protegidos con JWT"]
+    admin["Administrador<br/>Gestiona noticias, usuarios y borradores IA"]
+    aiProvider["Proveedor IA<br/>Modelo externo para analisis y generacion de borradores"]
+    pdfSource["Fuente legal oficial<br/>PDF o pagina publica con documento legal"]
 
-    Person(user, "Usuario", "Visitante o usuario autenticado")
+    subgraph newshub["NewsHub"]
+        nginx["Nginx<br/>Nginx 1.27<br/>Expone HTTP, sirve public/ y delega PHP a PHP-FPM"]
+        app["Laravel Application<br/>Laravel 13 / PHP 8.4<br/>API REST, rutas web, Inertia, JWT, reglas editoriales y persistencia"]
+        frontend["React UI<br/>React + TypeScript + Inertia.js + Material UI<br/>Interfaz publica y Admin CMS bajo resources/js"]
+        mysql[("MySQL<br/>MySQL 8.4<br/>Usuarios, categorias, noticias, tags y campos de IA")]
+        aiAgent["legal-ai-agent<br/>FastAPI / Python<br/>Procesa URLs de PDF legal y devuelve suggested_news"]
+        docs["Docusaurus<br/>Documentacion tecnica, arquitectura, API y reportes"]
+    end
 
-    Container_Boundary(system, "NewsHub") {
-        Container(nginx, "Nginx", "Web server", "Expone HTTP y reenvía a PHP-FPM")
-        Container(app, "Laravel App", "Laravel 13 / PHP 8.4", "Rutas web, API, dominio, autenticación JWT e Inertia")
-        Container(frontend, "React UI", "React + TypeScript + Inertia.js + Vite + Material UI", "Interfaz integrada bajo resources/js")
-        ContainerDb(mysql, "MySQL", "MySQL", "Persistencia de usuarios, categorías y noticias")
-        Container(docs, "Docusaurus", "Docusaurus", "Documentación técnica y de producto")
-    }
-
-    Rel(user, nginx, "Accede", "HTTP")
-    Rel(nginx, app, "Reenvía requests", "FastCGI")
-    Rel(app, frontend, "Renderiza páginas Inertia")
-    Rel(app, mysql, "Lee y escribe datos", "SQL")
-    Rel(user, docs, "Consulta documentación", "HTTP")
+    visitor -->|Lee portal publico por HTTP| nginx
+    authUser -->|Consume API protegida con Bearer JWT| nginx
+    admin -->|Administra contenido con sesion web| nginx
+    nginx -->|Reenvia requests PHP por FastCGI| app
+    app -->|Renderiza paginas Inertia y entrega assets Vite| frontend
+    app -->|Lee y escribe datos por SQL| mysql
+    app -->|Solicita procesamiento legal por HTTP interno| aiAgent
+    aiAgent -->|Descarga o resuelve PDF por HTTPS| pdfSource
+    aiAgent -->|Envia texto extraido para generar propuesta por HTTPS| aiProvider
+    visitor -->|Consulta documentacion por HTTP opcional| docs
 ```
 
-## Descripción
+## Descripcion
 
-La interfaz React no es un contenedor desplegable separado de negocio; forma parte del build de Laravel. Se representa por claridad arquitectónica porque tiene estructura, dependencias y pruebas propias.
+La interfaz React no es una aplicacion desplegable independiente: vive dentro del proyecto Laravel en `resources/js` y se publica como assets de Vite. Se muestra como contenedor logico porque tiene componentes, pruebas y responsabilidades propias dentro de la experiencia web.

@@ -10,105 +10,49 @@ El backend actual declara `laravel/framework` con versión `^13.8`, por lo que l
 
 ## Estructura final
 
-```text
-NewsHub-Laravel-Agentic-News-Platform/
-  backend/
-    app/
-      Actions/
-        News/
-          GetRecommendedNewsAction.php
-      Http/
-        Controllers/
-          Api/
-            AuthController.php
-            CategoryController.php
-            NewsController.php
-          Auth/
-          ProfileController.php
-        Middleware/
-          HandleInertiaRequests.php
-        Requests/
-          Auth/
-          News/
-            ListNewsRequest.php
-          ProfileUpdateRequest.php
-        Resources/
-          CategoryResource.php
-          NewsResource.php
-          UserResource.php
-      Models/
-        Category.php
-        News.php
-        User.php
-      Providers/
-        AppServiceProvider.php
-      Services/
-        NewsRecommendationService.php
-    bootstrap/
-    config/
-    database/
-      factories/
-        CategoryFactory.php
-        NewsFactory.php
-        UserFactory.php
-      migrations/
-        create_categories_table.php
-        create_news_table.php
-      seeders/
-        CategorySeeder.php
-        DatabaseSeeder.php
-        NewsSeeder.php
-    public/
-    resources/
-      css/
-      js/
-        Components/
-          News/
-        Layouts/
-          AuthenticatedLayout.tsx
-          GuestLayout.tsx
-        Pages/
-          Auth/
-          News/
-            Index.tsx
-            Show.tsx
-          Profile/
-          Welcome.tsx
-        types/
-          index.d.ts
-          news.ts
-      views/
-        app.blade.php
-    routes/
-      api.php
-      auth.php
-      console.php
-      web.php
-    tests/
-      Feature/
-        Api/
-          AuthApiTest.php
-          CategoryApiTest.php
-          NewsApiTest.php
-          RecommendationApiTest.php
-        Auth/
-      Unit/
-        NewsRecommendationServiceTest.php
-    composer.json
-    package.json
-    phpunit.xml
-    tsconfig.json
-    vite.config.js
-  docs/
-    adr/
-    architecture/
-    backlog/
-  docs-site/
-    docs/
-      adr/
-      architecture/
-      backlog/
-  prompts/
+```mermaid
+flowchart TD
+    root["NewsHub-Laravel-Agentic-News-Platform"]
+    root --> backend["backend/"]
+    root --> docs["docs/"]
+    root --> docsSite["docs-site/"]
+    root --> prompts["prompts/"]
+
+    backend --> app["app/"]
+    app --> actions["Actions/News<br/>GetRecommendedNewsAction.php"]
+    app --> http["Http/"]
+    http --> controllers["Controllers<br/>Api, Auth, ProfileController.php"]
+    http --> middleware["Middleware<br/>HandleInertiaRequests.php"]
+    http --> requests["Requests<br/>Auth, News, ProfileUpdateRequest.php"]
+    http --> apiResources["Resources<br/>CategoryResource.php, NewsResource.php, UserResource.php"]
+    app --> models["Models<br/>Category.php, News.php, User.php"]
+    app --> providers["Providers<br/>AppServiceProvider.php"]
+    app --> services["Services<br/>NewsRecommendationService.php"]
+
+    backend --> framework["bootstrap/ y config/"]
+    backend --> database["database/"]
+    database --> factories["factories<br/>CategoryFactory.php, NewsFactory.php, UserFactory.php"]
+    database --> migrations["migrations<br/>create_categories_table.php, create_news_table.php"]
+    database --> seeders["seeders<br/>CategorySeeder.php, DatabaseSeeder.php, NewsSeeder.php"]
+
+    backend --> publicDir["public/"]
+    backend --> resourcesDir["resources/"]
+    resourcesDir --> css["css/"]
+    resourcesDir --> js["js/"]
+    js --> components["Components/News"]
+    js --> layouts["Layouts<br/>AuthenticatedLayout.tsx, GuestLayout.tsx"]
+    js --> pages["Pages<br/>Auth, News, Profile, Welcome.tsx"]
+    js --> types["types<br/>index.d.ts, news.ts"]
+    resourcesDir --> views["views<br/>app.blade.php"]
+
+    backend --> routes["routes<br/>api.php, auth.php, console.php, web.php"]
+    backend --> tests["tests/"]
+    tests --> feature["Feature<br/>Api y Auth"]
+    tests --> unit["Unit<br/>NewsRecommendationServiceTest.php"]
+    backend --> configFiles["composer.json<br/>package.json<br/>phpunit.xml<br/>tsconfig.json<br/>vite.config.js"]
+
+    docs --> docsGroups["adr/<br/>architecture/<br/>backlog/"]
+    docsSite --> siteDocs["docs<br/>adr, architecture, backlog"]
 ```
 
 ## Reglas finales

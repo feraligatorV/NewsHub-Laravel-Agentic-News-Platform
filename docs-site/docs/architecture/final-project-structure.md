@@ -15,45 +15,48 @@ El backend actual declara `laravel/framework` con versión `^13.8`, por lo que l
 
 ## Estructura final
 
-```text
-backend/
-  app/
-    Actions/News/
-    Http/
-      Controllers/Api/
-      Controllers/Auth/
-      Requests/
-      Resources/
-    Models/
-    Services/
-  database/
-    factories/
-    migrations/
-    seeders/
-  resources/
-    js/
-      Components/
-      Layouts/
-      Pages/
-      types/
-    views/
-  routes/
-    api.php
-    auth.php
-    console.php
-    web.php
-  tests/
-    Feature/
-    Unit/
-docs/
-  adr/
-  architecture/
-  backlog/
-docs-site/
-  docs/
-    adr/
-    architecture/
-    backlog/
+```mermaid
+flowchart TD
+    root["NewsHub-Laravel-Agentic-News-Platform"]
+    root --> backend["backend/"]
+    root --> docs["docs/"]
+    root --> docsSite["docs-site/"]
+
+    backend --> app["app/"]
+    app --> actions["Actions/News/"]
+    app --> http["Http/"]
+    http --> apiControllers["Controllers/Api/"]
+    http --> authControllers["Controllers/Auth/"]
+    http --> requests["Requests/"]
+    http --> apiResources["Resources/"]
+    app --> models["Models/"]
+    app --> services["Services/"]
+
+    backend --> database["database/"]
+    database --> factories["factories/"]
+    database --> migrations["migrations/"]
+    database --> seeders["seeders/"]
+
+    backend --> resourcesDir["resources/"]
+    resourcesDir --> js["js/"]
+    js --> components["Components/"]
+    js --> layouts["Layouts/"]
+    js --> pages["Pages/"]
+    js --> types["types/"]
+    resourcesDir --> views["views/"]
+
+    backend --> routes["routes/"]
+    routes --> apiRoute["api.php"]
+    routes --> authRoute["auth.php"]
+    routes --> consoleRoute["console.php"]
+    routes --> webRoute["web.php"]
+
+    backend --> tests["tests/"]
+    tests --> featureTests["Feature/"]
+    tests --> unitTests["Unit/"]
+
+    docs --> docsGroups["adr/<br/>architecture/<br/>backlog/"]
+    docsSite --> siteDocs["docs<br/>adr, architecture, backlog"]
 ```
 
 ## Reglas finales

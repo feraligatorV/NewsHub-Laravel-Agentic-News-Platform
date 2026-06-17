@@ -14,6 +14,7 @@ import {
 interface NewsCardProps {
     news: News;
     compact?: boolean;
+    featured?: boolean;
 }
 
 function formatDate(value: string | null): string {
@@ -28,28 +29,48 @@ function formatDate(value: string | null): string {
     }).format(new Date(value));
 }
 
-export default function NewsCard({ news, compact = false }: NewsCardProps) {
+export default function NewsCard({ news, compact = false, featured = false }: NewsCardProps) {
     return (
-        <Card variant="outlined" sx={{ height: '100%', borderRadius: 2, overflow: 'hidden' }}>
-            <CardActionArea component={Link} href={`/news/${news.slug}`} sx={{ height: '100%' }}>
+        <Card
+            variant="outlined"
+            sx={{
+                height: '100%',
+                borderRadius: 2,
+                overflow: 'hidden',
+                boxShadow: featured ? '0 18px 60px rgba(6, 37, 68, 0.14)' : 'none',
+            }}
+        >
+            <CardActionArea
+                component={Link}
+                href={`/news/${news.slug}`}
+                sx={{
+                    height: '100%',
+                    display: featured ? { xs: 'block', md: 'grid' } : 'block',
+                    gridTemplateColumns: featured ? '1fr 1fr' : undefined,
+                }}
+            >
                 {news.image_url && (
                     <CardMedia
                         component="img"
-                        height={compact ? 140 : 190}
+                        height={featured ? 360 : compact ? 140 : 190}
                         image={news.image_url}
                         alt={news.title}
-                        sx={{ objectFit: 'cover' }}
+                        sx={{ height: featured ? { xs: 240, md: '100%' } : undefined, objectFit: 'cover' }}
                     />
                 )}
-                <CardContent>
-                    <Stack spacing={1.25}>
+                <CardContent sx={{ p: featured ? { xs: 3, md: 4 } : 2 }}>
+                    <Stack spacing={featured ? 2 : 1.25}>
                         <Box>
                             <Chip label={news.category.name} size="small" color="primary" variant="outlined" />
                         </Box>
-                        <Typography variant={compact ? 'subtitle1' : 'h6'} component="h2" sx={{ fontWeight: 800 }}>
+                        <Typography
+                            variant={featured ? 'h4' : compact ? 'subtitle1' : 'h6'}
+                            component="h2"
+                            sx={{ fontWeight: 900, lineHeight: 1.16 }}
+                        >
                             {news.title}
                         </Typography>
-                        <Typography color="text.secondary" variant="body2">
+                        <Typography color="text.secondary" variant={featured ? 'body1' : 'body2'}>
                             {news.summary}
                         </Typography>
                         <Typography color="text.secondary" variant="caption">

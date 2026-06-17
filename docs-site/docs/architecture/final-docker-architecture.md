@@ -22,7 +22,7 @@ El repositorio aún no contiene `Dockerfile` ni `docker-compose.yml`. Esta arqui
 ## Diagrama final
 
 ```mermaid
-flowchart TB
+flowchart TD
     Browser[Navegador] -->|HTTP :8080| Nginx[Nginx container]
     subgraph Compose[Docker Compose]
         Nginx -->|FastCGI| App[app: PHP 8.4 FPM + Laravel 13]

@@ -1,24 +1,67 @@
-# Reporte de implementación frontend
+# Reporte de implementacion frontend
 
 ## Resumen
 
-El frontend de NewsHub fue implementado dentro de la aplicación Laravel, usando React, TypeScript, Inertia.js, Vite y Material UI. La solución no crea una aplicación frontend independiente y todo el código de interfaz vive bajo `backend/resources/js`.
+El frontend de NewsHub esta integrado dentro de la aplicacion Laravel con React, TypeScript, Inertia.js, Vite y Material UI. No se creo una aplicacion frontend independiente y todo el codigo de interfaz vive bajo `backend/resources/js`.
 
-La navegación de páginas usa Inertia.js y rutas web de Laravel. No se usa React Router.
+La navegacion de paginas usa rutas web de Laravel e Inertia.js. No se usa React Router.
 
-La autenticación principal es JWT con `tymon/jwt-auth`; el frontend envía el token con `Authorization: Bearer <token>`. Sanctum no forma parte de la estrategia principal de autenticación API.
+La autenticacion principal de API sigue siendo JWT con `tymon/jwt-auth`; las llamadas protegidas usan `Authorization: Bearer <token>`. Las paginas Breeze/Inertia existen como scaffolding web y experiencia de usuario, pero no reemplazan JWT ni introducen Sanctum como estrategia principal.
 
-## Tecnologías usadas
+## Paginas creadas o actualizadas
 
-- React + TypeScript como capa de interfaz.
-- Inertia.js para integrar páginas React dentro de Laravel.
-- Vite como empaquetador de frontend.
-- Material UI para layout, componentes visuales, navegación, tarjetas, formularios, estados y botones.
-- `localStorage` para persistencia local del token JWT y datos mínimos del usuario autenticado.
+| Ruta web | Pagina Inertia | Proposito |
+| --- | --- | --- |
+| `/` | `backend/resources/js/Pages/News/Index.tsx` | Lista principal de noticias, categorias y estados de carga/error. |
+| `/news/{news}` | `backend/resources/js/Pages/News/Show.tsx` | Detalle de una noticia y noticias recomendadas. |
+| `/categories` | `backend/resources/js/Pages/Categories/Index.tsx` | Exploracion de categorias y noticias asociadas. |
+| `/login` | `backend/resources/js/Pages/Auth/Login.tsx` | Inicio de sesion contra la API JWT y persistencia local del token. |
+| `/register` | `backend/resources/js/Pages/Auth/Register.tsx` | Registro de usuario web mediante scaffolding Breeze/Inertia. |
+| `/forgot-password` | `backend/resources/js/Pages/Auth/ForgotPassword.tsx` | Solicitud de enlace para recuperacion de password. |
+| `/reset-password/{token}` | `backend/resources/js/Pages/Auth/ResetPassword.tsx` | Definicion de nuevo password cuando Laravel entrega un token valido. |
+| `/profile` | `backend/resources/js/Pages/Profile/Edit.tsx` | Edicion de perfil, actualizacion de password y eliminacion de cuenta. |
+
+## Pagina Register
+
+`Register.tsx` fue actualizada con Material UI y `useForm` de Inertia. La pagina usa la ruta web `register` provista por Breeze/Inertia para crear una cuenta de usuario web.
+
+Esta pagina no modifica el contrato JWT de la API. El endpoint publico `POST /api/auth/register` sigue disponible para clientes API, mientras que la pagina web usa el scaffolding existente de Laravel para la experiencia visible de registro.
+
+## Recuperacion de password
+
+`ForgotPassword.tsx` usa `route('password.email')` para solicitar el correo de recuperacion. `ResetPassword.tsx` usa `route('password.store')` para guardar el nuevo password cuando existe un token valido.
+
+Estas pantallas se implementaron porque el backend ya incluye los controladores y rutas Breeze correspondientes: `PasswordResetLinkController` y `NewPasswordController`.
+
+## Perfil
+
+`Profile/Edit.tsx` ahora usa `AppShell` y Material UI. Incluye tres secciones:
+
+- `UpdateProfileInformationForm`: edicion de `name` y `email`.
+- `UpdatePasswordForm`: actualizacion de password desde `route('password.update')`.
+- `DeleteUserForm`: eliminacion de cuenta desde `route('profile.destroy')`.
+
+La seccion de eliminacion se mantiene porque Breeze/Inertia ya la soportaba en backend mediante `ProfileController::destroy`.
+
+## Navbar auth behavior
+
+`AppShell` fue actualizado para mostrar enlaces segun estado de autenticacion:
+
+- Sin sesion web ni token JWT: muestra `Login` y `Register`.
+- Con usuario web de Inertia o token JWT en `localStorage`: muestra `Profile` y `Logout`.
+- `Logout` intenta invalidar el JWT via `POST /api/auth/logout`, limpia `localStorage` y tambien dispara el logout web de Laravel cuando aplica.
+
+Este comportamiento permite convivir con el login JWT usado por la API y con las paginas web de Breeze/Inertia.
+
+## Componentes y tecnologia visual
+
+Las paginas nuevas y actualizadas usan Material UI para formularios, botones, alertas, dialogos y layout. Los iconos se toman de `@mui/icons-material`.
+
+No se agrego React Router. La navegacion sigue usando `Link`, `router` y `useForm` de `@inertiajs/react`.
 
 ## Resultado de build
 
-Comando validado:
+Comando ejecutado:
 
 ```bash
 npm run build
@@ -28,105 +71,27 @@ Resultado:
 
 ```text
 tsc && vite build
-built
+built in 1.32s
 ```
 
-El build de Vite finalizó correctamente. Durante la validación local existió un bloqueo inicial por permisos del directorio temporal usado por Tailwind/jiti en Windows; al reejecutar el comando con permisos adecuados, la compilación terminó sin errores.
+El build finalizo correctamente. La salida tambien mostro un aviso del perfil local de PowerShell sobre `Start-SshAgent`, pero no bloqueo TypeScript ni Vite.
 
-## Páginas creadas o actualizadas
+Tambien se valido la documentacion Docusaurus desde `docs-site`:
 
-| Ruta web | Página Inertia | Propósito |
-| --- | --- | --- |
-| `/` | `backend/resources/js/Pages/News/Index.tsx` | Lista principal de noticias, categorías y estados de carga/error. |
-| `/news/{news}` | `backend/resources/js/Pages/News/Show.tsx` | Detalle de una noticia y sección de noticias recomendadas. |
-| `/categories` | `backend/resources/js/Pages/Categories/Index.tsx` | Exploración de categorías y noticias asociadas. |
-| `/login` | `backend/resources/js/Pages/Auth/Login.tsx` | Inicio de sesión contra el endpoint JWT de la API. |
-
-Las páginas se resuelven desde Laravel mediante Inertia.js. La navegación interna se realiza con `Link` de `@inertiajs/react`, no con React Router.
-
-## Componentes creados
-
-| Componente | Ubicación | Responsabilidad |
-| --- | --- | --- |
-| `AppShell` | `backend/resources/js/Components/Layout/AppShell.tsx` | Estructura visual compartida, barra de navegación y contenedor de página. |
-| `NewsCard` | `backend/resources/js/Components/News/NewsCard.tsx` | Presentación reutilizable de noticias en listados y recomendaciones. |
-| `StateMessage` | `backend/resources/js/Components/News/StateMessage.tsx` | Estados de carga, error y contenido vacío. |
-
-También se mantiene la estructura base generada por Breeze/Inertia para páginas y componentes de autenticación o perfil, pero el flujo API principal documentado usa JWT.
-
-## Helpers y tipos frontend
-
-| Archivo | Propósito |
-| --- | --- |
-| `backend/resources/js/lib/api.ts` | Cliente API para autenticación, noticias, recomendaciones y categorías. |
-| `backend/resources/js/lib/auth.ts` | Lectura, escritura y limpieza del token JWT y datos de usuario en `localStorage`. |
-| `backend/resources/js/types/news.ts` | Tipos TypeScript para `User`, `Category`, `News`, respuestas paginadas y respuestas de autenticación. |
-
-## Endpoints API consumidos
-
-| Método | Endpoint | Uso frontend |
-| --- | --- | --- |
-| `POST` | `/api/auth/login` | Autenticar usuario y obtener token JWT. |
-| `POST` | `/api/auth/logout` | Invalidar token JWT activo. |
-| `GET` | `/api/news` | Cargar listado paginado de noticias. |
-| `GET` | `/api/news/{news}` | Cargar detalle de noticia. |
-| `GET` | `/api/news/{news}/recommended` | Cargar noticias recomendadas relacionadas. |
-| `GET` | `/api/categories` | Cargar listado de categorías. |
-| `GET` | `/api/categories/{category}/news` | Cargar noticias filtradas por categoría. |
-
-## Flujo de autenticación JWT
-
-1. El usuario envía credenciales desde `Auth/Login`.
-2. La página llama `POST /api/auth/login`.
-3. La API responde con un token JWT y datos del usuario.
-4. `lib/auth.ts` guarda el token como `newshub.jwt` y el usuario como `newshub.user`.
-5. `lib/api.ts` añade `Authorization: Bearer <token>` a las solicitudes que requieren autenticación.
-6. Al cerrar sesión, el frontend llama `POST /api/auth/logout` si existe token y luego limpia el estado local.
-
-```mermaid
-sequenceDiagram
-    participant User as Usuario
-    participant Login as Auth/Login
-    participant Api as lib/api.ts
-    participant Backend as Laravel API JWT
-    participant Storage as localStorage
-
-    User->>Login: Ingresa email y password
-    Login->>Api: POST /api/auth/login
-    Api->>Backend: Credenciales
-    Backend-->>Api: token JWT y user
-    Api-->>Login: AuthResponse
-    Login->>Storage: Guarda newshub.jwt y newshub.user
-    Api->>Backend: Authorization: Bearer <token>
+```bash
+npm run build
 ```
 
-## Manejo del token JWT
+Resultado:
 
-- El token se almacena localmente bajo la clave `newshub.jwt`.
-- Los datos mínimos del usuario se almacenan bajo `newshub.user`.
-- El cliente API agrega el encabezado `Authorization: Bearer <token>` cuando corresponde.
-- El logout limpia el token y el usuario del navegador después de intentar invalidar la sesión en la API.
-- No se usa Sanctum como mecanismo principal de autenticación.
-
-## Uso de Material UI
-
-Material UI se usa para construir una interfaz consistente sin crear un sistema visual propio desde cero. Los componentes MUI cubren:
-
-- Estructura de página y navegación.
-- Formularios de login.
-- Tarjetas de noticias.
-- Listados y grillas responsivas.
-- Estados de carga, error y vacío.
-- Botones, chips, tipografía y contenedores.
+```text
+docusaurus build
+Generated static files in "build".
+```
 
 ## Riesgos pendientes
 
-- El almacenamiento de JWT en `localStorage` es suficiente para la prueba técnica, pero en producción requiere revisión de exposición ante XSS y políticas de expiración/renovación.
-- La UI depende de que `JWT_SECRET`, migraciones y seeders estén configurados correctamente en el entorno Laravel.
-- La experiencia de usuario ante expiración de token puede requerir mejoras, como redirección automática a login o mensajes más específicos.
-- `npm audit` reportó vulnerabilidades críticas en dependencias existentes; no se ejecutó `npm audit fix` para evitar cambios fuera del alcance documental.
-
-## Evidencia complementaria
-
-- Frontend build: `npm run build` aprobado.
-- Pruebas backend previas: `34 passed (140 assertions)`.
+- El login principal de la API sigue guardando el JWT en `localStorage`; para produccion requiere endurecimiento ante XSS, expiracion y renovacion.
+- Las paginas web de registro, recuperacion y perfil dependen del scaffolding Breeze/Inertia y de la configuracion de correo de Laravel.
+- La convivencia entre sesion web e inicio de sesion JWT esta resuelta a nivel de UI, pero podria requerir una decision de producto si se desea una sola fuente de verdad para usuarios finales.
+- No se ejecutaron pruebas E2E de flujos de correo para `forgot-password` y `reset-password`.

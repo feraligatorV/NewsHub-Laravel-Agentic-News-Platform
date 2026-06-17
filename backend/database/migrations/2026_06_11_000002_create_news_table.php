@@ -15,9 +15,23 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('summary');
             $table->longText('content');
+            $table->longText('body');
             $table->string('image_url')->nullable();
             $table->string('source')->default('NewsHub');
-            $table->timestamp('published_at')->index();
+            $table->string('source_url')->nullable();
+            $table->timestamp('published_at')->nullable()->index();
+            $table->timestamp('publication_date')->nullable()->index();
+            $table->string('status')->default('draft')->index();
+            $table->string('legal_document_type')->nullable()->index();
+            $table->string('decree_number')->nullable();
+            $table->string('institution')->nullable()->index();
+            $table->string('affected_law')->nullable();
+            $table->date('effective_date')->nullable();
+            $table->boolean('ai_generated')->default(false)->index();
+            $table->text('ai_summary')->nullable();
+            $table->json('ai_key_points')->nullable();
+            $table->string('original_pdf_url')->nullable();
+            $table->longText('extracted_text')->nullable();
             $table->timestamps();
 
             $table->index('category_id');

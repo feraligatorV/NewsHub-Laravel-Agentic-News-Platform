@@ -1,0 +1,124 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+jobs:
+  backend:
+    name: Backend tests and frontend build
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
+
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: newshub_testing
+          MYSQL_USER: newshub
+          MYSQL_PASSWORD: newshub
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          extensions: pdo_mysql, pdo_sqlite, mbstring, zip
+          coverage: none
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: newshub_testing
+          DB_USERNAME: newshub
+          DB_PASSWORD: newshub
+          JWT_SECRET: ci-jwt-secret-for-newshub-tests-32bytes
+
+      - name: Run migrations
+        run: php artisan migrate --force
+        env:
+          APP_ENV: testing
+          APP_KEY: base64:MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI=
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: newshub_testing
+          DB_USERNAME: newshub
+          DB_PASSWORD: newshub
+          JWT_SECRET: ci-jwt-secret-for-newshub-tests-32bytes
+
+      - name: Run backend tests
+        run: php artisan test
+        env:
+          APP_ENV: testing
+          APP_KEY: base64:MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI=
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: newshub_testing
+          DB_USERNAME: newshub
+          DB_PASSWORD: newshub
+          JWT_SECRET: ci-jwt-secret-for-newshub-tests-32bytes
+
+      - name: Build frontend assets
+        run: npm run build
+
+  docs:
+    name: Docusaurus build
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: docs-site
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: docs-site/package-lock.json
+
+      - name: Install documentation dependencies
+        run: npm ci
+
+      - name: Build documentation
+        run: npm run build
